@@ -11,15 +11,24 @@ pipeline {
         }
 
         stage('Setup Python 3.10 venv') {
-            steps {
-                bat '''
-                    py -3.10 --version
-                    py -3.10 -m venv .venv
-                    .venv\\Scripts\\python.exe -m pip install --upgrade pip
-                    .venv\\Scripts\\python.exe -m pip install -r requirements.txt
-                '''
-            }
-        }
+    steps {
+        bat '''
+            "C:\\Users\\ASUS\\AppData\\Local\\Programs\\Python\\Python310\\python.exe" --version
+
+            "C:\\Users\\ASUS\\AppData\\Local\\Programs\\Python\\Python310\\python.exe" -m venv .venv
+
+            if errorlevel 1 exit /b 1
+
+            .venv\\Scripts\\python.exe -m pip install --upgrade pip
+
+            if errorlevel 1 exit /b 1
+
+            .venv\\Scripts\\python.exe -m pip install -r requirements.txt
+
+            if errorlevel 1 exit /b 1
+        '''
+    }
+}
 
         stage('Run Pytest') {
             steps {
